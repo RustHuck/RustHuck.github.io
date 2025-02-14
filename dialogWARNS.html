@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .container-box {
+            display: block; /* По умолчанию показываем первое окно */
+        }
+
+        .hidden {
+            display: none; /* Скрываем окно */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="dialog1" class="container-box">
+            <h1 id="title_" class="box-title">ВЫДАТЬ ВЫГОВОР</h1>
+            <p id="content_" class="box-content"></p>
+            <input id="inp-id" class="input-value" type="text" placeholder="Айди или ник">
+            <input id="inp-reason" class="input-value" type="text" placeholder="Причина">
+            <div class="container-btn">
+                <button id="next" class="box-btn str">Далее</button>
+                <button id="cancel" class="box-btn bck">Отмена</button>
+             </div>
+        </div>
+
+        <div id="dialog2" class="container-box hidden">
+            <h1 class="box-title">ПОДТВЕРЖДЕНИЕ</h1>
+            <p class="box-content">Вы уверены, что хотите выдать выговор?</p>
+            <div class="container-btn">
+                <button id="confirm" class="box-btn str">Подтвердить</button>
+                <button id="back" class="box-btn bck">Назад</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dialog1 = document.getElementById('dialog1');
+        const dialog2 = document.getElementById('dialog2');
+        const nextButton = document.getElementById('next');
+        const backButton = document.getElementById('back');
+        const confirmButton = document.getElementById('confirm');
+        const cancelButton = document.getElementById('cancel');
+        const inputId = document.getElementById('inp-id');
+        const inputReason = document.getElementById('inp-reason');
+
+        nextButton.addEventListener('click', () => {
+            // Проверка, что поля заполнены
+            if (inputId.value.trim() === '' || inputReason.value.trim() === '') {
+                alert('Пожалуйста, заполните все поля.');
+                return;
+            }
+            // Переключение окон
+            dialog1.classList.add('hidden');
+            dialog2.classList.remove('hidden');
+        });
+
+        backButton.addEventListener('click', () => {
+            // Возвращаемся к первому окну
+            dialog2.classList.add('hidden');
+            dialog1.classList.remove('hidden');
+        });
+
+        cancelButton.addEventListener('click', () => {
+            // Действия при отмене (например, закрытие окна)
+            alert('Вы отменили выдачу выговора.');
+            // Дополнительный код для закрытия окна (например, если оно открыто через CEF)
+        });
+
+        confirmButton.addEventListener('click', () => {
+            // Действия при подтверждении (например, отправка данных на сервер)
+            const id = inputId.value;
+            const reason = inputReason.value;
+            alert(`Вы выдали выговор игроку ${id} по причине: ${reason}`);
+            // Дополнительный код для отправки данных на сервер
+        });
+
+    </script>
+</body>
+</html>
